@@ -1,0 +1,12 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "compas_buff"
+version = "0.1.0"
+description = "A minimal description of compas_buff"
+authors = [
+    { name="Chen Kasirer", email="kasirer@arch.ethz.ch" }
+]
+dependencies = [ "protobuf" ]

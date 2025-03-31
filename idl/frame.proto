@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+import "point.proto";
+import "vector.proto";
+
+package compas_buff.data;
+
+message FrameDate {
+  string guid = 1;
+  string name = 2;
+  PointData point = 3;
+  VectorData xaixs = 4;
+  VectorData yaixs = 5;
+}
+
+
