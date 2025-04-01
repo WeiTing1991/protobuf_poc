@@ -1,20 +1,16 @@
-
 import os
 import sys
+
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../../..")))
 
 from compas.data import Data
-from compas.geometry import Point
-from compas.geometry import Vector
-from compas.geometry import Frame
-from compas.geometry import Line
+from compas.geometry import Frame, Line, Point, Vector
+from google.protobuf import any_pb2, message
 
-from compas_buff.data import point_pb2 as PointData
 from compas_buff.data import line_pb2 as LineData
-from compas_buff.data import vector_pb2 as VectorData
 from compas_buff.data import message_pb2 as AnyData
-
-from google.protobuf import any_pb2
+from compas_buff.data import point_pb2 as PointData
+from compas_buff.data import vector_pb2 as VectorData
 
 
 class Element(Data):
@@ -28,6 +24,7 @@ class Element(Data):
         self.ysize = ysize
         self.zsize = zsize
 
+
 def point_to_pb(point):
     point_data = PointData.PointData()
     point_data.guid = str(point.guid)
@@ -37,6 +34,7 @@ def point_to_pb(point):
     point_data.z = point.z
 
     return point_data, AnyData.AnyDataType.POINT
+
 
 def vector_to_pb(vector):
     vector_data = VectorData.VectorData()
@@ -101,12 +99,17 @@ def serialize_any(obj):
         if not serializer:
             raise ValueError(f"Unsupported type: {type(obj)}")
         offset, type_enum = serializer(obj)
+        print(f"offset: {offset}")
+        print(f"type_enum: {type_enum}")
     return offset, type_enum
+
 
 def serialize_any_wrapper(obj):
     """Wraps AnyData inside AnyDataWrapper."""
     any_data = any_pb2.Any()
+    assert any_data.Is(obj.DESCRIPTOR)
     return any_data.MergeFrom(serialize_any(obj)[0])
+
 
 def serialize_list(data_list):
     """Serialize a Python list containing mixed data types."""
@@ -115,12 +118,14 @@ def serialize_list(data_list):
         list_data.data.append(serialize_any_wrapper(item))
     return list_data
 
+
 def serialize_dict(data_dict):
     """Serialize a Python dictionary containing mixed data types."""
     dict_data = AnyData.DictData()
     for key, value in data_dict.items():
         dict_data.data[key].CopyFrom(serialize_any_wrapper(value))
     return dict_data
+
 
 def serialize_message(data):
     """Serialize a top-level protobuf message."""
@@ -161,6 +166,7 @@ def main():
         proto_data = AnyData.MessageData()
         proto_data.ParseFromString(binary_data)
         print(proto_data)
+
 
 if __name__ == "__main__":
     main()
