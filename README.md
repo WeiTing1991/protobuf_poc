@@ -1,3 +1,8 @@
+# Structure
+
+
+# Install Protobuf
+```bash
 # install Protobuf
 
 ```bash
@@ -11,17 +16,21 @@ protoc --version
 # Python
 
 ```bash
-# .proto to .py
-protoc --proto_path=$SRC_DIR --python_out=$DST_DIR $SRC_DIR/addressbook.proto
+# proto to py
+# protoc --proto_path=$SRC_DIR --python_out=$DST_DIR $SRC_DIR/*.proto
+
+# for compas_buff
+# path has to be represent the same to the output directory
+protoc --proto_path=./idl --python_out=. ./idl/**/*.proto
 ```
 
 ```bash
-# env
-python -m venv .env
+# venv
+python3 -m venv .env 
 source .env/bin/activate
+pip install compas
 pip install protobuf
 ```
-
 
 # typescript
 
