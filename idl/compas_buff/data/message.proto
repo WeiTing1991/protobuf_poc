@@ -10,6 +10,7 @@ import "compas_buff/data/frame.proto";
 
 
 /** AnyData serves as a union in protobuf */
+// Check google.protobuf.Any
 message AnyData {
   oneof data {
     PointData point = 1;
@@ -23,7 +24,6 @@ message AnyData {
 }
 
 /** repeated serves as a list in protobuf */
-// Check google.protobuf.Any
 message ListData {
   repeated AnyData data = 1;
 }
