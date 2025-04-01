@@ -27,9 +27,10 @@ from compas_buff.data import vector_pb2 as compas__buff_dot_data_dot_vector__pb2
 from compas_buff.data import line_pb2 as compas__buff_dot_data_dot_line__pb2
 from compas_buff.data import element_pb2 as compas__buff_dot_data_dot_element__pb2
 from compas_buff.data import frame_pb2 as compas__buff_dot_data_dot_frame__pb2
+from google.protobuf import any_pb2 as google_dot_protobuf_dot_any__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x1e\x63ompas_buff/data/message.proto\x12\x10\x63ompas_buff.data\x1a\x1c\x63ompas_buff/data/point.proto\x1a\x1d\x63ompas_buff/data/vector.proto\x1a\x1b\x63ompas_buff/data/line.proto\x1a\x1e\x63ompas_buff/data/element.proto\x1a\x1c\x63ompas_buff/data/frame.proto\"\xd3\x02\n\x07\x41nyData\x12,\n\x05point\x18\x01 \x01(\x0b\x32\x1b.compas_buff.data.PointDataH\x00\x12.\n\x06vector\x18\x02 \x01(\x0b\x32\x1c.compas_buff.data.VectorDataH\x00\x12*\n\x04line\x18\x03 \x01(\x0b\x32\x1a.compas_buff.data.LineDataH\x00\x12,\n\x05\x66rame\x18\x04 \x01(\x0b\x32\x1b.compas_buff.data.FrameDataH\x00\x12\x30\n\x07\x65lement\x18\x05 \x01(\x0b\x32\x1d.compas_buff.data.ElementDataH\x00\x12*\n\x04list\x18\x06 \x01(\x0b\x32\x1a.compas_buff.data.ListDataH\x00\x12*\n\x04\x64ict\x18\x07 \x01(\x0b\x32\x1a.compas_buff.data.DictDataH\x00\x42\x06\n\x04\x64\x61ta\"3\n\x08ListData\x12\'\n\x04\x64\x61ta\x18\x01 \x03(\x0b\x32\x19.compas_buff.data.AnyData\"\x86\x01\n\x08\x44ictData\x12\x32\n\x04\x64\x61ta\x18\x01 \x03(\x0b\x32$.compas_buff.data.DictData.DataEntry\x1a\x46\n\tDataEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12(\n\x05value\x18\x02 \x01(\x0b\x32\x19.compas_buff.data.AnyData:\x02\x38\x01\"6\n\x0bMessageData\x12\'\n\x04\x64\x61ta\x18\x01 \x01(\x0b\x32\x19.compas_buff.data.AnyDatab\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x1e\x63ompas_buff/data/message.proto\x12\x10\x63ompas_buff.data\x1a\x1c\x63ompas_buff/data/point.proto\x1a\x1d\x63ompas_buff/data/vector.proto\x1a\x1b\x63ompas_buff/data/line.proto\x1a\x1e\x63ompas_buff/data/element.proto\x1a\x1c\x63ompas_buff/data/frame.proto\x1a\x19google/protobuf/any.proto\"\xd3\x02\n\x07\x41nyData\x12,\n\x05point\x18\x01 \x01(\x0b\x32\x1b.compas_buff.data.PointDataH\x00\x12.\n\x06vector\x18\x02 \x01(\x0b\x32\x1c.compas_buff.data.VectorDataH\x00\x12*\n\x04line\x18\x03 \x01(\x0b\x32\x1a.compas_buff.data.LineDataH\x00\x12,\n\x05\x66rame\x18\x04 \x01(\x0b\x32\x1b.compas_buff.data.FrameDataH\x00\x12\x30\n\x07\x65lement\x18\x05 \x01(\x0b\x32\x1d.compas_buff.data.ElementDataH\x00\x12*\n\x04list\x18\x06 \x01(\x0b\x32\x1a.compas_buff.data.ListDataH\x00\x12*\n\x04\x64ict\x18\x07 \x01(\x0b\x32\x1a.compas_buff.data.DictDataH\x00\x42\x06\n\x04\x64\x61ta\"4\n\x0e\x41nyDataWrapper\x12\"\n\x04\x64\x61ta\x18\x01 \x01(\x0b\x32\x14.google.protobuf.Any\":\n\x08ListData\x12.\n\x04\x64\x61ta\x18\x01 \x03(\x0b\x32 .compas_buff.data.AnyDataWrapper\"\x8d\x01\n\x08\x44ictData\x12\x32\n\x04\x64\x61ta\x18\x01 \x03(\x0b\x32$.compas_buff.data.DictData.DataEntry\x1aM\n\tDataEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12/\n\x05value\x18\x02 \x01(\x0b\x32 .compas_buff.data.AnyDataWrapper:\x02\x38\x01\"=\n\x0bMessageData\x12.\n\x04\x64\x61ta\x18\x01 \x01(\x0b\x32 .compas_buff.data.AnyDataWrapper*g\n\x0b\x41nyDataType\x12\x0b\n\x07UNKNOWN\x10\x00\x12\t\n\x05POINT\x10\x01\x12\n\n\x06VECTOR\x10\x02\x12\x08\n\x04LINE\x10\x03\x12\t\n\x05\x46RAME\x10\x04\x12\x0b\n\x07\x45LEMENT\x10\x05\x12\x08\n\x04LIST\x10\x06\x12\x08\n\x04\x44ICT\x10\x07\x62\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -38,14 +39,18 @@ if not _descriptor._USE_C_DESCRIPTORS:
   DESCRIPTOR._loaded_options = None
   _globals['_DICTDATA_DATAENTRY']._loaded_options = None
   _globals['_DICTDATA_DATAENTRY']._serialized_options = b'8\001'
-  _globals['_ANYDATA']._serialized_start=205
-  _globals['_ANYDATA']._serialized_end=544
-  _globals['_LISTDATA']._serialized_start=546
-  _globals['_LISTDATA']._serialized_end=597
-  _globals['_DICTDATA']._serialized_start=600
-  _globals['_DICTDATA']._serialized_end=734
-  _globals['_DICTDATA_DATAENTRY']._serialized_start=664
-  _globals['_DICTDATA_DATAENTRY']._serialized_end=734
-  _globals['_MESSAGEDATA']._serialized_start=736
-  _globals['_MESSAGEDATA']._serialized_end=790
+  _globals['_ANYDATATYPE']._serialized_start=894
+  _globals['_ANYDATATYPE']._serialized_end=997
+  _globals['_ANYDATA']._serialized_start=232
+  _globals['_ANYDATA']._serialized_end=571
+  _globals['_ANYDATAWRAPPER']._serialized_start=573
+  _globals['_ANYDATAWRAPPER']._serialized_end=625
+  _globals['_LISTDATA']._serialized_start=627
+  _globals['_LISTDATA']._serialized_end=685
+  _globals['_DICTDATA']._serialized_start=688
+  _globals['_DICTDATA']._serialized_end=829
+  _globals['_DICTDATA_DATAENTRY']._serialized_start=752
+  _globals['_DICTDATA_DATAENTRY']._serialized_end=829
+  _globals['_MESSAGEDATA']._serialized_start=831
+  _globals['_MESSAGEDATA']._serialized_end=892
 # @@protoc_insertion_point(module_scope)

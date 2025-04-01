@@ -14,7 +14,7 @@ from compas_buff.data import line_pb2 as LineData
 from compas_buff.data import vector_pb2 as VectorData
 from compas_buff.data import message_pb2 as AnyData
 
-# from google.protobuf import any_pb2
+from google.protobuf import any_pb2
 
 
 class Element(Data):
@@ -35,8 +35,8 @@ def point_to_pb(point):
     point_data.x = point.x
     point_data.y = point.y
     point_data.z = point.z
-    return point_data
 
+    return point_data, AnyData.AnyDataType.POINT
 
 def vector_to_pb(vector):
     vector_data = VectorData.VectorData()
@@ -45,7 +45,7 @@ def vector_to_pb(vector):
     vector_data.x = vector.x
     vector_data.y = vector.y
     vector_data.z = vector.z
-    return vector_data
+    return vector_data, AnyData.AnyDataType.VECTOR
 
 
 def line_to_pb(line):
@@ -54,7 +54,7 @@ def line_to_pb(line):
     line_data.name = line.name
     line_data.start.CopyFrom(point_to_pb(line.start))
     line_data.end.CopyFrom(point_to_pb(line.end))
-    return line_data
+    return line_data, AnyData.AnyDataType.LINE
 
 
 def frame_to_pb():
@@ -64,7 +64,7 @@ def frame_to_pb():
     frame_data.point.CopyFrom(point_to_pb(frame.point))
     frame_data.xaxis.CopyFrom(vector_to_pb(frame.xaxis))
     frame_data.yaxis.CopyFrom(vector_to_pb(frame.yaxis))
-    return frame_data
+    return frame_data, AnyData.AnyDataType.FRAME
 
 
 def element_to_pb(element):
@@ -75,7 +75,7 @@ def element_to_pb(element):
     element_data.xsize = element.xsize
     element_data.ysize = element.ysize
     element_data.zsize = element.zsize
-    return element_data
+    return element_data, AnyData.AnyDataType.ELEMENT
 
 
 SERIALIZERS = {
@@ -88,43 +88,46 @@ SERIALIZERS = {
 
 # no return enum type
 def serialize_any(obj):
-    """Serialize any object to a protobuf message"""
-    message = AnyData.MessageData()
-    # any_data = AnyData.AnyData()
+    """Serialize any object to a protobuf Any message"""
 
     if isinstance(obj, list):
-        message.data.list.CopyFrom(serialize_list(obj))
+        offset = serialize_list(obj)
+        type_enum = AnyData.AnyData().ListData
     elif isinstance(obj, dict):
-        message.data.dict.CopyFrom(serialize_dict(obj))
-        print(serialize_dict(obj))
+        offset = serialize_dict(obj)
+        type_enum = AnyData.AnyData().DictData
     else:
         serializer = SERIALIZERS.get(type(obj))
         if not serializer:
             raise ValueError(f"Unsupported type: {type(obj)}")
-        message.data.CopyFrom(serializer(obj))
-    return any_data
+        offset, type_enum = serializer(obj)
+    return offset, type_enum
 
+def serialize_any_wrapper(obj):
+    """Wraps AnyData inside AnyDataWrapper."""
+    any_data = any_pb2.Any()
+    return any_data.MergeFrom(serialize_any(obj)[0])
 
 def serialize_list(data_list):
     """Serialize a Python list containing mixed data types."""
     list_data = AnyData.ListData()
     for item in data_list:
-        list_data.data.append(serialize_any(item))
-        print(list_data)
+        list_data.data.append(serialize_any_wrapper(item))
     return list_data
 
 def serialize_dict(data_dict):
     """Serialize a Python dictionary containing mixed data types."""
     dict_data = AnyData.DictData()
     for key, value in data_dict.items():
-        dict_data.data[key].CopyFrom(serialize_any(value))
+        dict_data.data[key].CopyFrom(serialize_any_wrapper(value))
     return dict_data
 
 def serialize_message(data):
     """Serialize a top-level protobuf message."""
     message = AnyData.MessageData()
-    message.data.CopyFrom(serialize_any(data))
-    return message.SerializeToString()
+    serialized_data = serialize_any(data)
+    return message.SerializeToString(serialized_data)
+
 
 def main():
     # Example nested data structure
@@ -137,14 +140,22 @@ def main():
         "element": element,
     }
 
+    nested_list = [
+        Point(1.0, 2.0, 3.0),
+        Vector(4.0, 5.0, 6.0),
+    ]
+
+    point = Point(1.0, 2.0, 3.0)
+
     # Serialize and save
     binary_data = serialize_message(nested_data)
+    # binary_data = serialize_message(point)
 
     # binary_data = serialize_message(nested_data)
     with open("nested_data.bin", "wb") as f:
         f.write(binary_data)
 
-    # Deserialize and load
+    # Deserialize
     with open("nested_data.bin", "rb") as f:
         binary_data = f.read()
         proto_data = AnyData.MessageData()

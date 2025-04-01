@@ -8,9 +8,9 @@ import "compas_buff/data/line.proto";
 import "compas_buff/data/element.proto";
 import "compas_buff/data/frame.proto";
 
+import "google/protobuf/any.proto";
 
-/** AnyData serves as a union in protobuf */
-// Check google.protobuf.Any
+// Check oneof
 message AnyData {
   oneof data {
     PointData point = 1;
@@ -23,17 +23,32 @@ message AnyData {
   }
 }
 
+enum AnyDataType {
+  UNKNOWN = 0;
+  POINT = 1;
+  VECTOR = 2;
+  LINE = 3;
+  FRAME = 4;
+  ELEMENT = 5;
+  LIST = 6;
+  DICT = 7;
+}
+
+message AnyDataWrapper {
+  google.protobuf.Any data = 1;
+}
+
 /** repeated serves as a list in protobuf */
 message ListData {
-  repeated AnyData data = 1;
+  repeated AnyDataWrapper data = 1;
 }
 
 message DictData {
-  map<string, AnyData> data = 1;
+  map<string, AnyDataWrapper> data = 1;
 }
 
 /** root serialization element */
 message MessageData {
-  AnyData data = 1;
+  AnyDataWrapper data = 1;
 }
 
