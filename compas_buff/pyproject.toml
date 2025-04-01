@@ -9,4 +9,6 @@ description = "A minimal description of compas_buff"
 authors = [
     { name="Chen Kasirer", email="kasirer@arch.ethz.ch" }
 ]
+
 dependencies = [ "protobuf" ]
+
