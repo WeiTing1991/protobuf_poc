@@ -1,0 +1,39 @@
+syntax = "proto3";
+
+package compas_buff.data;
+
+import "compas_buff/data/point.proto";
+import "compas_buff/data/vector.proto";
+import "compas_buff/data/line.proto";
+import "compas_buff/data/element.proto";
+import "compas_buff/data/frame.proto";
+
+
+/** AnyData serves as a union in protobuf */
+message AnyData {
+  oneof data {
+    PointData point = 1;
+    VectorData vector = 2;
+    LineData line =3;
+    FrameData frame = 4;
+    ElementData element = 5;
+    ListData list = 6;
+    DictData dict = 7;
+  }
+}
+
+/** repeated serves as a list in protobuf */
+// Check google.protobuf.Any
+message ListData {
+  repeated AnyData data = 1;
+}
+
+message DictData {
+  map<string, AnyData> data = 1;
+}
+
+/** root serialization element */
+message MessageData {
+  AnyData data = 1;
+}
+

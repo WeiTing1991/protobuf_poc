@@ -1,11 +1,11 @@
 syntax = "proto3";
 
-import "point.proto";
-import "vector.proto";
-
 package compas_buff.data;
 
-message FrameDate {
+import "compas_buff/data/point.proto";
+import "compas_buff/data/vector.proto";
+
+message FrameData {
   string guid = 1;
   string name = 2;
   PointData point = 3;

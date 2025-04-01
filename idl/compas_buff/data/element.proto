@@ -1,8 +1,8 @@
 syntax = "proto3";
 
-import "frame.proto";
-
 package compas_buff.data;
+
+import "compas_buff/data/frame.proto";
 
 message ElementData {
   string guid = 1;

@@ -1,8 +1,8 @@
 syntax = "proto3";
 
-import "point.proto";
-
 package compas_buff.data;
+
+import "compas_buff/data/point.proto";
 
 message LineData {
   string guid = 1;
@@ -10,4 +10,3 @@ message LineData {
   PointData start = 3;
   PointData end = 4;
 }
-

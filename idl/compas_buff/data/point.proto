@@ -1,5 +1,7 @@
 syntax = "proto3";
 
+// Not necessary for Python, should still be declared to avoid name collisions
+// in the Protocol Buffers namespace and non-Python languages
 package compas_buff.data;
 
 message PointData {
@@ -10,5 +12,3 @@ message PointData {
   float y = 4;
   float z = 5;
 }
-
-
