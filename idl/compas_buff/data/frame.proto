@@ -9,8 +9,8 @@ message FrameData {
   string guid = 1;
   string name = 2;
   PointData point = 3;
-  VectorData xaixs = 4;
-  VectorData yaixs = 5;
+  VectorData xaxis = 4;
+  VectorData yaxis = 5;
 }
 
 

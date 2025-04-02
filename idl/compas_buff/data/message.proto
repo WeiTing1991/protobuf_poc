@@ -10,20 +10,8 @@ import "compas_buff/data/frame.proto";
 
 import "google/protobuf/any.proto";
 
-// Check oneof
-message AnyData {
-  oneof data {
-    PointData point = 1;
-    VectorData vector = 2;
-    LineData line =3;
-    FrameData frame = 4;
-    ElementData element = 5;
-    ListData list = 6;
-    DictData dict = 7;
-  }
-}
-
-enum AnyDataType {
+// to explictily define data types
+enum DataType {
   UNKNOWN = 0;
   POINT = 1;
   VECTOR = 2;
@@ -34,21 +22,36 @@ enum AnyDataType {
   DICT = 7;
 }
 
-message AnyDataWrapper {
-  google.protobuf.Any data = 1;
+/** Hold any data type in protobuf */
+message AnyData {
+  DataType type = 1;
+  oneof data {
+    PointData point = 2;
+    VectorData vector = 3;
+    LineData line = 4;
+    FrameData frame = 5;
+    ElementData element = 6;
+    ListData list = 7;
+    DictData dict = 8;
+  }
 }
+
+// message AnyData {
+//   DataType type = 1;
+//   google.protobuf.Any data = 2;
+// }
 
 /** repeated serves as a list in protobuf */
 message ListData {
-  repeated AnyDataWrapper data = 1;
+  repeated AnyData data = 1;
 }
 
 message DictData {
-  map<string, AnyDataWrapper> data = 1;
+  map<string, AnyData> data = 1;
 }
 
 /** root serialization element */
 message MessageData {
-  AnyDataWrapper data = 1;
+  AnyData data = 1;
 }
 
